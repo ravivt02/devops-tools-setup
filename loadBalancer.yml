@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: paytm
+  name: paytm-deploy
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: paytm
+  template:
+    metadata:
+      labels:
+        app: paytm
+    spec:
+      containers:
+      - name: cont1
+        image: ravivt02/paymovies:latest
+        ports:
+          - containerPort: 80
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: sv1
+spec:
+  type: LoadBalancer
+  selector:
+    app: paytm
+  ports:
+    - port: 80
+      targetPort: 80
